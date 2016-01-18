@@ -5,26 +5,34 @@
 'use strict';
 import React, {
   AppRegistry,
+  ActionSheetIOS,
   Component,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
 
 class ActionSheetIOSBugProject extends Component {
+  showActionSheet() {
+    ActionSheetIOS.showActionSheetWithOptions({
+      options: ['Option 0', 'Option 1', 'Cancel'],
+      cancelButtonIndex: 2,
+      anchor: React.findNodeHandle(this._actionSheet),
+    },
+    (buttonIndex) => {
+      console.log(buttonIndex);
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <TouchableOpacity style={styles.button} 
+          ref={(c) => this._actionSheet = c} 
+          onPress={() => this.showActionSheet()}>
+          <Text>Show ActionSheet</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -33,19 +41,12 @@ class ActionSheetIOSBugProject extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  button: {
+    top: 50,
   },
 });
 
